@@ -20,9 +20,6 @@ go get github.com/seacraft/shutdown
 
 `github.com/seacraft/shutdown` documentation is available on [godoc](http://godoc.org/github.com/seacraft/shutdown).
 
-- [`PosixSignalManager`](http://godoc.org/github.com/seacraft/shutdown/posixsignal)
-
-
 ## Example - POSIX signals
 
 Graceful shutdown will listen for posix SIGINT and SIGTERM signals. When they are received it will run all callbacks in separate go routines. When callbacks return, the application will exit with os.Exit(0)
