@@ -19,7 +19,6 @@ go get github.com/seacraft/shutdown
 ## Documentation
 
 `github.com/seacraft/shutdown` documentation 文档可在 [godoc](http://godoc.org/github.com/seacraft/shutdown)上找到。
-- [`PosixSignalManager`](http://godoc.org/github.com/seacraft/shutdown/posixsignal)
 
 
 ## 示例 - POSIX 信号
