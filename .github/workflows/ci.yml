@@ -1,0 +1,78 @@
+# This workflow will build a golang project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
+
+name: ci
+
+on: [push, pull_request]
+env:
+  GO_VERSION: '1.21'
+
+jobs:
+  # Check if there is any dirty change for go mod tidy
+  go-mod:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Go
+        uses: actions/setup-go@v3
+        with:
+          # https://github.com/actions/setup-go#supported-version-syntax
+          # ex:
+          # - 1.18beta1 -> 1.18.0-beta.1
+          # - 1.18rc1 -> 1.18.0-rc.1
+          go-version: ${{ env.GO_VERSION }}
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Check go mod
+        run: |
+          go mod tidy
+          git diff --exit-code go.mod
+          git diff --exit-code go.sum
+  verify-copyright:
+    runs-on: ubuntu-latest
+    needs: go-mod
+    steps:
+      - name: Setup Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: ${{ env.GO_VERSION }}
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Run verify copyright.
+        run: make verify-copyright
+  test:
+    runs-on: ubuntu-latest
+    needs: verify-copyright
+    steps:
+      - name: Setup Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: ${{ env.GO_VERSION }}
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Run Unit tests.
+        run: make test
+  format:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Setup Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: ${{ env.GO_VERSION }}
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: format Go Code
+        run: make format
+  lint:
+    runs-on: ubuntu-latest
+    needs: format
+    steps:
+      - name: Setup Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: ${{ env.GO_VERSION }}
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Lint Go Code
+        run: |
+          make lint
