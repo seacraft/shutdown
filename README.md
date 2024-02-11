@@ -20,8 +20,6 @@ go get github.com/seacraft/shutdown
 
 `github.com/seacraft/shutdown` documentation is available on [godoc](http://godoc.org/github.com/seacraft/shutdown).
 
-- [`PosixSignalManager`](http://godoc.org/github.com/seacraft/shutdown/posixsignal)
-
 
 ## Example - POSIX signals
 
