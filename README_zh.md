@@ -84,7 +84,7 @@ func main() {
 	// 添加 posix shutdown 管理器
 	gs.AddShutdownManager(shutdown.NewPosixSignalManager())
 
-  // 设置错误处理程序
+       // 设置错误处理程序
 	gs.SetErrorHandler(shutdown.ErrorFunc(func(err error) {
 		fmt.Println("Error:", err)
 	}))
